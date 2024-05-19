@@ -1,125 +1,182 @@
-import { useState } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import React from "react";
+import { Link, router } from "@inertiajs/react";
+import AlertMazer from "@/Components/AlertMazer";
 
-export default function Authenticated({ user, header, children }) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+export default function AuthenticatedLayout({
+    user,
+    header,
+    headerRight,
+    children,
+    back,
+    message,
+}) {
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        router.post(route("logout"));
+    };
+
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
+        <div id="app">
+            <AlertMazer {...message} />
+            <div id="main" className="layout-horizontal">
+                <header className="mb-5">
+                    <div className="header-top">
+                        <div className="container">
+                            <div className="logo">
+                                <a href="index.html">
+                                    <img
+                                        src="/assets/compiled/svg/logo.svg"
+                                        alt="Logo"
+                                    />
+                                </a>
                             </div>
-
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                            >
+                            <div className="header-top-right">
+                                <div className="dropdown">
+                                    <a
+                                        href="#"
+                                        id="topbarUserDropdown"
+                                        className="user-dropdown d-flex align-items-center dropend dropdown-toggle "
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        <div className="avatar avatar-md2">
+                                            <img
+                                                src="/assets/compiled/jpg/1.jpg"
+                                                alt="Avatar"
+                                            />
+                                        </div>
+                                        <div className="text">
+                                            <h6 className="user-dropdown-name">
                                                 {user.name}
-
-                                                <svg
-                                                    className="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
+                                            </h6>
+                                            <p className="user-dropdown-status text-sm text-muted">
+                                                {user.email}
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <ul
+                                        className="dropdown-menu dropdown-menu-end shadow-lg"
+                                        aria-labelledby="topbarUserDropdown"
+                                    >
+                                        <li>
+                                            <Link
+                                                className="dropdown-item"
+                                                href={route("profile.edit")}
+                                            >
+                                                Akun Saya
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <a
+                                                className="dropdown-item"
+                                                href="#"
+                                            >
+                                                Pengaturan
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <hr className="dropdown-divider" />
+                                        </li>
+                                        <li>
+                                            <a
+                                                className="dropdown-item"
+                                                onClick={handleLogout}
+                                            >
+                                                Keluar
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {/* Burger button responsive */}
+                                <a
+                                    href="#"
+                                    className="burger-btn d-block d-xl-none"
+                                >
+                                    <i className="bi bi-justify fs-3" />
+                                </a>
                             </div>
                         </div>
-
-                        <div className="-me-2 flex items-center sm:hidden">
-                            <button
-                                onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                            >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
                     </div>
-                </div>
-
-                <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
-
-                    <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
+                    <nav className="main-navbar">
+                        <div className="container">
+                            <ul>
+                                <li className="menu-item  ">
+                                    <a href="index.html" className="menu-link">
+                                        <span>
+                                            <i className="bi bi-grid-fill" />{" "}
+                                            Dashboard
+                                        </span>
+                                    </a>
+                                </li>
+                                <li className="menu-item  ">
+                                    <a href="index.html" className="menu-link">
+                                        <span>
+                                            <i className="bi bi-cup-hot" />{" "}
+                                            Pemesanan
+                                        </span>
+                                    </a>
+                                </li>
+                                <li className="menu-item  ">
+                                    <Link
+                                        href={route("lapangan.index")}
+                                        className="menu-link"
+                                    >
+                                        <span>
+                                            <i className="bi bi-pin-map" />{" "}
+                                            Lapangan
+                                        </span>
+                                    </Link>
+                                </li>
+                                <li className="menu-item  ">
+                                    <a href="index.html" className="menu-link">
+                                        <span>
+                                            <i className="bi bi-people" />{" "}
+                                            Pelanggan
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
-            {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
+                    </nav>
                 </header>
-            )}
+                <div className="content-wrapper container">
+                    <div className="page-heading ">
+                        <div className="d-flex justify-content-between">
+                            <h3>
+                                {back && (
+                                    <Link href={back} className="btn btn-ghost">
+                                        <i className="bi bi-arrow-left"></i>
+                                    </Link>
+                                )}
+                                {header}
+                            </h3>
+                            {headerRight}
+                        </div>
+                    </div>
 
-            <main>{children}</main>
+                    {children}
+                </div>
+                <footer>
+                    <div className="container">
+                        <div className="footer clearfix mb-0 text-muted">
+                            <div className="float-start">
+                                <p>2023 © Mazer</p>
+                            </div>
+                            <div className="float-end">
+                                <p>
+                                    Crafted with{" "}
+                                    <span className="text-danger">
+                                        <i className="bi bi-heart" />
+                                    </span>{" "}
+                                    by <a href="https://saugi.me">Saugi</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
         </div>
     );
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lapangan', function (Blueprint $table) {
             $table->id();
-            $table->string('image')->nullable();
+            $table->text('image')->nullable();
             $table->text('nama')->nullable();
             $table->double('harga_per_jam')->default(0);
             $table->text('lokasi')->nullable();

@@ -1,97 +1,91 @@
-import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { useEffect } from "react";
+import { Head, Link, useForm } from "@inertiajs/react";
+import GuestLayout from "@/Layouts/GuestLayout";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
         remember: false,
     });
 
     useEffect(() => {
         return () => {
-            reset('password');
+            reset("password");
         };
     }, []);
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('login'));
+        post(route("login"));
     };
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
+            <Head title="Login" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-
+            <h1 className="auth-title">Masuk</h1>
+            <p className="auth-subtitle mb-5">
+                Input your data to register to our website.
+            </p>
             <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
+                <div className="form-group position-relative has-icon-left mb-4">
+                    <input
+                        type="text"
+                        className={`form-control form-control-xl ${
+                            errors.email ? "is-invalid" : ""
+                        }`}
                         value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
+                        onChange={(e) => setData("email", e.target.value)}
+                        placeholder="Email"
                     />
-
-                    <InputError message={errors.email} className="mt-2" />
+                    <div className="form-control-icon">
+                        <i className="bi bi-envelope" />
+                    </div>
+                    <div class="invalid-feedback">
+                        <i class="bx bx-radio-circle"></i>
+                        {errors.email}
+                    </div>
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
+                <div className="form-group position-relative has-icon-left mb-4">
+                    <input
                         type="password"
-                        name="password"
+                        className={`form-control form-control-xl ${
+                            errors.password ? "is-invalid" : ""
+                        }`}
                         value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
+                        onChange={(e) => setData("password", e.target.value)}
+                        placeholder="Password"
                     />
-
-                    <InputError message={errors.password} className="mt-2" />
+                    <div className="form-control-icon">
+                        <i className="bi bi-shield-lock" />
+                    </div>
+                    <div class="invalid-feedback">
+                        <i class="bx bx-radio-circle"></i>
+                        {errors.password}
+                    </div>
                 </div>
 
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) => setData('remember', e.target.checked)}
-                        />
-                        <span className="ms-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
-                </div>
+                <button className="btn btn-primary btn-block btn-lg shadow-lg mt-5">
+                    Masuk
+                </button>
             </form>
+            <div className="text-center mt-5 text-lg fs-4">
+                <p className="text-gray-600">
+                    Don't have an account?{" "}
+                    <Link href={route("register")} className="font-bold">
+                        Daftar
+                    </Link>
+                    .
+                </p>
+                {/* <p>
+                    <a className="font-bold" href="auth-forgot-password.html">
+                        Forgot password?
+                    </a>
+                    .
+                </p> */}
+            </div>
         </GuestLayout>
     );
 }
