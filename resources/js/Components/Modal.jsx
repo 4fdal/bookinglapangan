@@ -5,7 +5,7 @@ export default function Modal({
     title = "",
     children,
     actions,
-    onClose = () => { },
+    onClose = () => {},
 }) {
     return (
         <>
@@ -23,14 +23,12 @@ export default function Modal({
                 aria-modal="true"
             >
                 <div
-                    className="modal-dialog modal-dialog-centered modal-dialog-centered"
+                    className="modal-dialog modal-dialog-centered modal-dialog-centered modal-lg"
                     role="document"
                 >
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="galleryModalTitle">
-                                {title}
-                            </h5>
+                            <h5 className="modal-title">{title}</h5>
                             <button
                                 onClick={onClose}
                                 type="button"
@@ -55,9 +53,7 @@ export default function Modal({
                                 </svg>
                             </button>
                         </div>
-                        <div className="modal-body">
-                            {children}
-                        </div>
+                        <div className="modal-body">{children}</div>
                         <div className="modal-footer">
                             <button
                                 onClick={onClose}

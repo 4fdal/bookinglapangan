@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 
-export default function UserDropdown({ user, onLogout }) {
+export default function CustomerDropdown({ user, onLogout }) {
     return (
         <div className="header-top-right">
             {user ? (
@@ -31,23 +31,32 @@ export default function UserDropdown({ user, onLogout }) {
                     >
                         <li>
                             <Link
-                                className="dropdown-item"
+                                className="dropdown-item text-primary d-flex flex-row justify-content-between"
                                 href={route("profile.edit")}
                             >
-                                Akun Saya
+                                <span>
+                                    <i className="bi bi-cart"></i>
+                                    &nbsp;Cart
+                                </span>
+                                <span class="badge bg-primary">0</span>
                             </Link>
                         </li>
                         <li>
-                            <a className="dropdown-item" href="#">
-                                Pengaturan
-                            </a>
+                            <Link
+                                className="dropdown-item text-primary"
+                                href={route("profile.edit")}
+                            >
+                                <i className="bi bi-people"></i>
+                                &nbsp;Akun Saya
+                            </Link>
                         </li>
                         <li>
                             <hr className="dropdown-divider" />
                         </li>
                         <li>
                             <a className="dropdown-item" onClick={onLogout}>
-                                Keluar
+                                <i className="bi bi-logout"></i>
+                                &nbsp; Keluar
                             </a>
                         </li>
                     </ul>
@@ -57,7 +66,7 @@ export default function UserDropdown({ user, onLogout }) {
                     <Link href={route("login")} className="btn text-primary">
                         Login
                     </Link>
-                    <div class="vr"></div>
+                    <div className="vr"></div>
                     <Link href={route("register")} className="btn text-primary">
                         Register
                     </Link>

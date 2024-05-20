@@ -1,15 +1,21 @@
 <?php
 
+use App\Http\Controllers\CustomerLapanganController;
 use App\Http\Controllers\LapanganController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', []);
-})->name('welcome');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
+
+Route::as('customer.')->group(function () {
+    Route::prefix('lapangan')->as('lapangan.')->group(function () {
+        Route::get('/{id}', [CustomerLapanganController::class, 'show'])->name('show');
+    });
+});
 
 
 Route::prefix('admin')->middleware('auth')->group(function () {

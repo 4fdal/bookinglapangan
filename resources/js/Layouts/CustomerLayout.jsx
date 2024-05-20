@@ -1,5 +1,6 @@
 import AlertMazer from "@/Components/AlertMazer";
-import UserDropdown from "@/Components/UserDropdown";
+import Breadcrumb from "@/Components/Breadcrumb";
+import CustomerDropdown from "@/Components/CustomerDropdown";
 import { Head, Link, router } from "@inertiajs/react";
 
 export default function CustomerLayout({
@@ -9,6 +10,8 @@ export default function CustomerLayout({
     children,
     back,
     message,
+    headerChildren,
+    dataBreadcrumb = [],
 }) {
     const handleLogout = (e) => {
         e.preventDefault();
@@ -20,7 +23,7 @@ export default function CustomerLayout({
             <Head title="Sewa Lapangan" />
             <AlertMazer {...message} />
             <div id="main" className="layout-horizontal">
-                <header className="mb-5">
+                <header>
                     <div className="header-top">
                         <div className="container">
                             <div className="logo">
@@ -32,7 +35,7 @@ export default function CustomerLayout({
                                 </Link>
                             </div>
 
-                            <UserDropdown user={user} />
+                            <CustomerDropdown user={user} />
                         </div>
                     </div>
                     <nav className="main-navbar">
@@ -50,23 +53,34 @@ export default function CustomerLayout({
                         </div>
                     </nav>
                 </header>
-                <div className="content-wrapper container">
-                    <div className="page-heading ">
-                        <div className="d-flex justify-content-between">
-                            <h3>
-                                {back && (
-                                    <Link href={back} className="btn btn-ghost">
-                                        <i className="bi bi-arrow-left"></i>
-                                    </Link>
-                                )}
-                                {header}
-                            </h3>
-                            {headerRight}
+
+                {headerChildren}
+
+                <div className="content-wrapper container ">
+                    {header && (
+                        <div className="page-heading mb-0">
+                            <div className="d-flex justify-content-between">
+                                <h3>
+                                    {back && (
+                                        <Link
+                                            href={back}
+                                            className="btn btn-ghost"
+                                        >
+                                            <i className="bi bi-arrow-left"></i>
+                                        </Link>
+                                    )}
+                                    {header}
+                                </h3>
+                                {headerRight}
+                            </div>
                         </div>
-                    </div>
+                    )}
+
+                    <Breadcrumb data={dataBreadcrumb} />
 
                     {children}
                 </div>
+
                 <footer>
                     <div className="container">
                         <div className="footer clearfix mb-0 text-muted">
