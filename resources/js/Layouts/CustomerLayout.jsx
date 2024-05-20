@@ -57,6 +57,8 @@ export default function CustomerLayout({
                 {headerChildren}
 
                 <div className="content-wrapper container ">
+                    <Breadcrumb data={dataBreadcrumb} />
+
                     {header && (
                         <div className="page-heading mb-0">
                             <div className="d-flex justify-content-between">
@@ -75,8 +77,6 @@ export default function CustomerLayout({
                             </div>
                         </div>
                     )}
-
-                    <Breadcrumb data={dataBreadcrumb} />
 
                     {children}
                 </div>

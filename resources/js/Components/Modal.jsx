@@ -6,6 +6,7 @@ export default function Modal({
     children,
     actions,
     onClose = () => {},
+    modalLg = false,
 }) {
     return (
         <>
@@ -23,7 +24,11 @@ export default function Modal({
                 aria-modal="true"
             >
                 <div
-                    className="modal-dialog modal-dialog-centered modal-dialog-centered modal-lg"
+                    className={classList({
+                        "modal-dialog": true,
+                        "modal-dialog-centered": true,
+                        "modal-lg": modalLg,
+                    })}
                     role="document"
                 >
                     <div className="modal-content">

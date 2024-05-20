@@ -20,6 +20,8 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "@vitejs/plugin-legacy": "^5.4.0"
+        "@vitejs/plugin-legacy": "^5.4.0",
+        "moment": "^2.30.1",
+        "react-big-calendar": "^1.12.2"
     }
 }

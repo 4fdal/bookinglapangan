@@ -4,7 +4,7 @@ import { Link } from "@inertiajs/react";
 export default function Breadcrumb({ data }) {
     return (
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb my-2">
+            <ol className="breadcrumb my-2">
                 {data.map((item, index) => (
                     <li
                         className={classList({
