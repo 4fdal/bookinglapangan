@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerLapanganController;
+use App\Http\Controllers\CustomerPemesananController;
 use App\Http\Controllers\LapanganController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
@@ -14,6 +15,11 @@ Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 Route::as('customer.')->group(function () {
     Route::prefix('lapangan')->as('lapangan.')->group(function () {
         Route::get('/{id}', [CustomerLapanganController::class, 'show'])->name('show');
+    });
+
+    Route::prefix('pemesanan')->as('pemesanan.')->group(function () {
+        Route::get('/', [CustomerPemesananController::class, 'index'])->name('index');
+        Route::post('/', [CustomerPemesananController::class, 'store'])->name('store');
     });
 });
 

@@ -9,10 +9,12 @@ const localizer = momentLocalizer(moment);
 export default function CalendarSchedule({
     onSelectSlot,
     defaultView = Views.WEEK,
+    events = [],
 }) {
     return (
         <div>
             <Calendar
+                events={events}
                 views={["week", "day"]}
                 defaultView={defaultView}
                 onSelectSlot={onSelectSlot}

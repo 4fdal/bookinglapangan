@@ -13,6 +13,12 @@ export default function Show({ auth: { user }, message, item }) {
 
     const [startOrder, setStartOrder] = React.useState(null);
     const [endOrder, setEndOrder] = React.useState(null);
+    const [myEvent, setMyEvent] = React.useState({
+        id: -1,
+        title: null,
+        start: new Date(),
+        end: new Date(),
+    });
 
     const [modalImage, setModalImage] = React.useState({
         open: false,
@@ -33,6 +39,27 @@ export default function Show({ auth: { user }, message, item }) {
     const handleSelectSlot = ({ start, end }) => {
         setStartOrder(start);
         setEndOrder(end);
+
+        setMyEvent({
+            id: -1,
+            start,
+            end,
+            title: "Pesan disini",
+        });
+    };
+
+    const handlePemesananFormChange = ({ start, end }) => {
+        if (end > start) {
+            start = new Date(start);
+            end = new Date(end);
+
+            setMyEvent({
+                id: -1,
+                start,
+                end,
+                title: "Pesan disini",
+            });
+        }
     };
 
     return (
@@ -93,6 +120,7 @@ export default function Show({ auth: { user }, message, item }) {
                             <div className="card-body">
                                 <h4 className="card-title">Pemesanan</h4>
                                 <CalendarSchedule
+                                    events={[myEvent]}
                                     onSelectSlot={handleSelectSlot}
                                 />
                             </div>
@@ -110,7 +138,12 @@ export default function Show({ auth: { user }, message, item }) {
                             </div>
                         </div>
                         <div className="card-footer">
-                            <PemesananForm start={startOrder} end={endOrder} />
+                            <PemesananForm
+                                lapanganId={item.id}
+                                start={startOrder}
+                                end={endOrder}
+                                onChange={handlePemesananFormChange}
+                            />
                         </div>
                     </div>
                 </div>
