@@ -3,6 +3,8 @@
 use App\Http\Controllers\CustomerCheckoutController;
 use App\Http\Controllers\CustomerLapanganController;
 use App\Http\Controllers\CustomerPemesananController;
+use App\Http\Controllers\CustomerProfileController;
+use App\Http\Controllers\CustomerRiwayatPemesanan;
 use App\Http\Controllers\LapanganController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
@@ -25,7 +27,16 @@ Route::as('customer.')->group(function () {
 
         Route::prefix('checkout')->as('checkout.')->group(function () {
             Route::get('/', [CustomerCheckoutController::class, 'index'])->name('index');
+            Route::post('/', [CustomerCheckoutController::class, 'store'])->name('store');
         });
+
+        Route::prefix('riwayat')->as('riwayat.')->group(function () {
+            Route::get('/', [CustomerRiwayatPemesanan::class, 'index'])->name('index');
+        });
+    });
+
+    Route::prefix('profile')->as('profile.')->group(function () {
+        Route::put('/', [CustomerProfileController::class, 'update'])->name('update');
     });
 });
 

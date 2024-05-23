@@ -2,15 +2,21 @@ import React from "react";
 
 export default function CreateForm({
     errors = {},
-    nama = null,
+    name = null,
     email = null,
     no_ponsel = null,
     alamat = null,
+    onChange = ({ name, email, no_ponsel, alamat }) => {},
 }) {
-    const [txtNama, setNama] = React.useState(nama);
-    const [txtEmail, setEmail] = React.useState(email);
-    const [txtNoPonsel, setNoPonsel] = React.useState(no_ponsel);
-    const [txtAlamat, setAlamat] = React.useState(alamat);
+    const handleChange = (key) => (e) => {
+        onChange({
+            name,
+            email,
+            no_ponsel,
+            alamat,
+            [key]: e.target.value,
+        });
+    };
 
     return (
         <div className="row">
@@ -20,10 +26,10 @@ export default function CreateForm({
                     <input
                         type="text"
                         className={`form-control ${
-                            errors.nama ? "is-invalid" : ""
+                            errors.name ? "is-invalid" : ""
                         }`}
-                        value={null}
-                        onChange={(e) => {}}
+                        value={name}
+                        onChange={handleChange("name")}
                         placeholder="Nama Pelanggan"
                     />
                     <div className="form-control-icon">
@@ -31,7 +37,7 @@ export default function CreateForm({
                     </div>
                     <div class="invalid-feedback">
                         <i class="bx bx-radio-circle"></i>
-                        {errors.nama}
+                        {errors.name}
                     </div>
                 </div>
             </div>
@@ -43,8 +49,8 @@ export default function CreateForm({
                         className={`form-control ${
                             errors.email ? "is-invalid" : ""
                         }`}
-                        value={null}
-                        onChange={(e) => {}}
+                        value={email}
+                        onChange={handleChange("email")}
                         placeholder="Email Pelanggan"
                     />
                     <div className="form-control-icon">
@@ -63,10 +69,10 @@ export default function CreateForm({
                     <input
                         type="text"
                         className={`form-control ${
-                            errors.email ? "is-invalid" : ""
+                            errors.no_ponsel ? "is-invalid" : ""
                         }`}
-                        value={null}
-                        onChange={(e) => {}}
+                        value={no_ponsel}
+                        onChange={handleChange("no_ponsel")}
                         placeholder="No. Whatsapp Pelanggan"
                     />
                     <div className="form-control-icon">
@@ -74,7 +80,7 @@ export default function CreateForm({
                     </div>
                     <div class="invalid-feedback">
                         <i class="bx bx-radio-circle"></i>
-                        {errors.email}
+                        {errors.no_ponsel}
                     </div>
                 </div>
             </div>
@@ -86,15 +92,17 @@ export default function CreateForm({
                         className={`form-control ${
                             errors.alamat ? "is-invalid" : ""
                         }`}
-                        onChange={(e) => {}}
+                        onChange={handleChange("alamat")}
                         placeholder="Alamat Pelanggan"
-                    ></textarea>
+                    >
+                        {alamat}
+                    </textarea>
                     <div className="form-control-icon">
                         <i className="bi bi-house" />
                     </div>
                     <div class="invalid-feedback">
                         <i class="bx bx-radio-circle"></i>
-                        {errors.email}
+                        {errors.alamat}
                     </div>
                 </div>
             </div>

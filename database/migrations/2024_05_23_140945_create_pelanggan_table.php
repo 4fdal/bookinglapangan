@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pelanggan', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('alamat');
+            $table->text('alamat')->nullable();
             $table->timestamps();
         });
     }

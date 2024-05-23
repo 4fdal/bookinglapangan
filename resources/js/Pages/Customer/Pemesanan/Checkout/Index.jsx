@@ -1,16 +1,62 @@
 import CustomerLayout from "@/Layouts/CustomerLayout";
+import ModalUploadButkiPembayaran from "./Partials/ModalUploadButkiPembayaran";
 import CreateForm from "./Partials/CreateForm";
 import Pemesanan from "@/Models/pemesanan";
+import User from "@/Models/user";
 import { currency } from "@/Helpers/GlobalHelpers";
 import React from "react";
+import { router } from "@inertiajs/react";
 
-export default function Index({ auth: { user }, message, items }) {
+export default function Index({
+    auth: { user },
+    message,
+    items,
+    rekening_penerima,
+}) {
+    user = new User(user);
+
     const [errors, setErrors] = React.useState({});
+    const [name, setName] = React.useState(user.name);
+    const [email, setEmail] = React.useState(user.email);
+    const [no_ponsel, setNoPonsel] = React.useState(user.no_ponsel);
+    const [alamat, setAlamat] = React.useState(user.pelanggan.alamat);
+    const [catatan_pesanan, setCatatanPesanan] = React.useState(
+        user.catatan_pesanan
+    );
+
+    const [openModalUploadButkiPembayaran, seOpentModalBuktiPembayaran] =
+        React.useState(false);
 
     const totalPembayaran = items.reduce((total, item) => {
         const pemesanan = new Pemesanan(item);
         return total + pemesanan.getTotalPayment();
     }, 0);
+
+    const handleChangeCreateForm = ({ name, email, no_ponsel, alamat }) => {
+        setName(name);
+        setEmail(email);
+        setNoPonsel(no_ponsel);
+        setAlamat(alamat);
+    };
+
+    const handlePayment = () => {
+        router.put(
+            route("customer.profile.update"),
+            {
+                name,
+                email,
+                no_ponsel,
+                alamat,
+            },
+            {
+                onError: setErrors,
+                onSuccess: () => {
+                    setErrors({});
+                    seOpentModalBuktiPembayaran(true);
+                },
+            }
+        );
+    };
 
     return (
         <CustomerLayout
@@ -24,12 +70,28 @@ export default function Index({ auth: { user }, message, items }) {
             back={route("customer.pemesanan.index")}
             header={"Checkout"}
         >
+            <ModalUploadButkiPembayaran
+                open={openModalUploadButkiPembayaran}
+                onClose={() => seOpentModalBuktiPembayaran(false)}
+                rekbank={rekening_penerima.bank}
+                reknomor={rekening_penerima.nomor}
+                rekpemilik={rekening_penerima.pemilik}
+                totalPembayaran={totalPembayaran}
+            />
+
             <div className="row">
                 <div className="col-md-8">
                     <div className="card">
                         <div className="card-content">
                             <div className="card-body">
-                                <CreateForm />
+                                <CreateForm
+                                    email={email}
+                                    name={name}
+                                    no_ponsel={no_ponsel}
+                                    alamat={alamat}
+                                    onChange={handleChangeCreateForm}
+                                    errors={errors}
+                                />
                             </div>
                         </div>
                     </div>
@@ -102,9 +164,13 @@ export default function Index({ auth: { user }, message, items }) {
 
                                 <textarea
                                     className={`form-control ${
-                                        errors.alamat ? "is-invalid" : ""
+                                        errors.catatan_pesanan
+                                            ? "is-invalid"
+                                            : ""
                                     }`}
-                                    onChange={(e) => {}}
+                                    onChange={(e) =>
+                                        setCatatanPesanan(e.target.value)
+                                    }
                                     placeholder="Catatan Pesanan"
                                 ></textarea>
                                 <p className="my-0">
@@ -114,7 +180,11 @@ export default function Index({ auth: { user }, message, items }) {
                                 </p>
 
                                 <div className="row mt-4">
-                                    <button className="btn btn-primary ">
+                                    <button
+                                        type="button"
+                                        onClick={handlePayment}
+                                        className="btn btn-primary "
+                                    >
                                         Bayar Sekarang
                                     </button>
                                 </div>

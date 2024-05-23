@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('pemesanan_id')->nullable();
             $table->double('jumlah')->default(0);
+            $table->double('harga')->default(0);
+            $table->double('total')->default(0);
             $table->date('tanggal')->nullable();
             $table->string('bukti')->nullable();
             $table->timestamps();

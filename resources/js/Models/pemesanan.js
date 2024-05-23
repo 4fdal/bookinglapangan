@@ -13,6 +13,7 @@ export default class Pemesanan {
         waktu_mulai,
         waktu_selesai,
         status,
+        catatan_pesanan,
     }) {
         this.id = id;
         this.user_id = user_id;
@@ -23,6 +24,7 @@ export default class Pemesanan {
         this.waktu_mulai = waktu_mulai;
         this.waktu_selesai = waktu_selesai;
         this.status = status;
+        this.catatan_pesanan = catatan_pesanan;
     }
 
     getTanggalBookingId() {

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pemesanan', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('pembayaran_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('lapangan_id')->nullable();
             $table->date('tanggal_booking')->nullable();
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->text('catatan_pesanan')->nullable();
             $table->timestamps();
 
+            $table->foreign('pembayaran_id')->references('id')->on('pembayaran')->onDelete('set null');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('lapangan_id')->references('id')->on('lapangan')->onDelete('set null');
         });

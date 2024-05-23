@@ -17,6 +17,7 @@ class Pemesanan extends Model
         'waktu_mulai',
         'waktu_selesai',
         'status',
+        'catatan_pesanan',
     ];
 
     public function user()
@@ -27,5 +28,18 @@ class Pemesanan extends Model
     public function lapangan()
     {
         return $this->belongsTo(Lapangan::class, 'lapangan_id', 'id');
+    }
+
+    public function getTotalHours()
+    {
+        $waktu_mulai = "{$this->tanggal_booking} {$this->waktu_mulai}";
+        $waktu_selesai = "{$this->tanggal_booking} {$this->waktu_selesai}";
+
+        return strtotime($waktu_selesai) - strtotime($waktu_selesai) / (60 * 60);
+    }
+
+    public function getTotalPrice()
+    {
+        return $this->getTotalHours() * $this->lapangan->harga_per_jam;
     }
 }
