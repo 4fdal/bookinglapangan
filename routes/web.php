@@ -17,9 +17,11 @@ Route::as('customer.')->group(function () {
         Route::get('/{id}', [CustomerLapanganController::class, 'show'])->name('show');
     });
 
-    Route::prefix('pemesanan')->as('pemesanan.')->group(function () {
+    Route::prefix('pemesanan')->middleware('auth:web')->as('pemesanan.')->group(function () {
         Route::get('/', [CustomerPemesananController::class, 'index'])->name('index');
         Route::post('/', [CustomerPemesananController::class, 'store'])->name('store');
+        Route::put('/{id}', [CustomerPemesananController::class, 'update'])->name('update');
+        Route::delete('/{id}', [CustomerPemesananController::class, 'destroy'])->name('destroy');
     });
 });
 
@@ -47,3 +49,4 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/api.php';

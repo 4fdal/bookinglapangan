@@ -6,27 +6,20 @@ use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class CustomerPemesananController extends Controller
 {
-    private function getCookiePemesanan()
-    {
-        $cookie_pemesanan = cookie('pemesanan')->getValue();
-        $cookie_pemesanan = $cookie_pemesanan ? unserialize($cookie_pemesanan) : [];
 
-        return $cookie_pemesanan;
-    }
-
-    public function index()
+    public function index(Request $request)
     {
         $user_id = Auth::user()->id ?? null;
-        if ($user_id) {
-            $items = $this->getCookiePemesanan();
-        } else {
-            $items = Pemesanan::where('user_id', $user_id)->get()->toArray();
-        }
+        $items = Pemesanan::with(['user', 'lapangan'])
+            ->where('user_id', $user_id)
+            ->get();
 
         return Inertia::render('Customer/Pemesanan/Index', compact('items'));
     }
@@ -53,13 +46,9 @@ class CustomerPemesananController extends Controller
             $updated_at = $created_at;
 
             $data_create = compact('user_id', 'lapangan_id', 'tanggal_booking', 'waktu_mulai', 'waktu_selesai', 'created_at', 'updated_at');
-            $pemesanan = Pemesanan::create($data_create);
+            Pemesanan::create($data_create);
 
             DB::commit();
-
-            $cookie_pemesanan = $this->getCookiePemesanan();
-            $cookie_pemesanan[] = $pemesanan;
-            cookie('pemesanan', serialize($cookie_pemesanan));
 
             return redirect()->route('customer.pemesanan.index')->withMessage([
                 'type' => 'success',
@@ -70,5 +59,70 @@ class CustomerPemesananController extends Controller
             DB::rollBack();
             throw $th;
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $pemesanan = Pemesanan::find($id);
+        if (!$pemesanan) return redirect()->back()->withMessage([
+            'type' => 'danger',
+            'title' => 'Error',
+            'message' => 'Data pemesanan tidak ditemukan'
+        ]);
+
+        $lapangan = $pemesanan->lapangan;
+
+        $request->validate([
+            'waktu_mulai' => ['required', 'date_format:Y-m-d H:i:s'],
+            'waktu_selesai' => ['required', 'date_format:Y-m-d H:i:s'],
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $tanggal_booking = Carbon::parse($request->waktu_mulai)->format('Y-m-d');
+            $waktu_mulai = Carbon::parse($request->waktu_mulai)->format('H:i:s');
+            $waktu_selesai = Carbon::parse($request->waktu_selesai)->format('H:i:s');
+            $created_at = date('Y-m-d H:i:s');
+            $updated_at = $created_at;
+
+            $data_update = compact('tanggal_booking', 'waktu_mulai', 'waktu_selesai', 'created_at', 'updated_at');
+
+            $pemesanan->update($data_update);
+
+            DB::commit();
+
+            return redirect()
+                ->route('customer.pemesanan.index')
+                ->withMessage([
+                    'type' => 'success',
+                    'title' => 'Berhasil',
+                    'message' => "Waktu pemesanan {$lapangan->nama} berhasil diubah"
+                ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+    }
+
+    public function destroy($id)
+    {
+
+        $pemesanan = Pemesanan::find($id);
+        if (!$pemesanan) return redirect()->back()->withMessage([
+            'type' => 'danger',
+            'title' => 'Error',
+            'message' => 'Data pemesanan tidak ditemukan'
+        ]);
+
+        $nama_lapangan = $pemesanan->lapangan->nama;
+        $pemesanan->delete();
+
+
+        return redirect()->back()->withMessage([
+            'type' => 'success',
+            'title' => 'Berhasil',
+            'message' => 'Pemesanan ' . $nama_lapangan . ' berhasil dihapus',
+        ]);
     }
 }

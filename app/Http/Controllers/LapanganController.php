@@ -198,4 +198,6 @@ class LapanganController extends Controller
             'message' => 'Data berhasil dihapus'
         ]);
     }
+
+
 }

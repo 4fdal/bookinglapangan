@@ -35,7 +35,10 @@ export default function CustomerLayout({
                                 </Link>
                             </div>
 
-                            <CustomerDropdown user={user} />
+                            <CustomerDropdown
+                                onLogout={handleLogout}
+                                user={user}
+                            />
                         </div>
                     </div>
                     <nav className="main-navbar">

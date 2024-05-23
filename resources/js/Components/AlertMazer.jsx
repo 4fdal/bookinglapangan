@@ -25,7 +25,7 @@ export default function AlertMazer({ type = null, title, message }) {
         const handleTimeout = () => {
             setVisible(false)
         }
-        setTimeout(handleTimeout, 5000)
+        setTimeout(handleTimeout, 10000)
         return () => clearTimeout(handleTimeout)
 
     }, [type])

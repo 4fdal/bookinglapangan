@@ -1,6 +1,8 @@
 import { Link } from "@inertiajs/react";
 
 export default function CustomerDropdown({ user, onLogout }) {
+  
+
     return (
         <div className="header-top-right">
             {user ? (
