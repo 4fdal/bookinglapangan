@@ -6,13 +6,16 @@ import moment from "moment";
 export default function InputStartEndTimeCalendarModal({
     lapanganId = null,
     exceptId = null,
+    start = null,
+    end = null,
     title,
     open = false,
-    onClose = () => {},
+    onClose = () => { },
+    onSave = ({ start, end }, { errors, setErrors }) => { }
 }) {
     const [errors, setErrors] = React.useState({});
 
-    const [isLoaded, setIsLoaded] = React.useState(false);
+    const [isEventLoaded, setIsEventLoaded] = React.useState(false);
     const [events, setEvents] = React.useState([]);
     const [waktuMulai, setWaktuMulai] = React.useState(null);
     const [waktuSelesai, setWaktuSelesai] = React.useState(null);
@@ -24,7 +27,6 @@ export default function InputStartEndTimeCalendarModal({
 
         if (exceptId) params.except_id = exceptId;
 
-        setIsLoaded(true);
         fetch(route("api.lapangan.schedule", params))
             .then(async (res) => {
                 const { data } = await res.json();
@@ -37,7 +39,7 @@ export default function InputStartEndTimeCalendarModal({
                 );
             })
             .catch((err) => console.error(err.message))
-            .finally(() => setIsLoaded(false));
+            .finally(() => setIsEventLoaded(true));
     };
 
     const handleSelectSlot = ({ start, end }) => {
@@ -54,6 +56,13 @@ export default function InputStartEndTimeCalendarModal({
 
         return listEvents;
     };
+
+    console.log(start, end)
+
+    React.useEffect(() => {
+        setWaktuMulai(start)
+        setWaktuSelesai(end)
+    }, [open])
 
     React.useEffect(() => {
         if (lapanganId) {
@@ -79,7 +88,7 @@ export default function InputStartEndTimeCalendarModal({
             onClose={onClose}
             title={title}
             actions={
-                <button className="btn btn-primary">
+                <button className="btn btn-primary" onClick={() => onSave({ start: waktuMulai, end: waktuSelesai }, { errors, setErrors })}>
                     <i className="bi bi-floppy"></i>
                     &nbsp;Simpan
                 </button>
@@ -92,9 +101,8 @@ export default function InputStartEndTimeCalendarModal({
                         <div className="form-group position-relative has-icon-left">
                             <input
                                 type="datetime-local"
-                                className={`form-control ${
-                                    errors.waktu_mulai ? "is-invalid" : ""
-                                }`}
+                                className={`form-control ${errors.waktu_mulai ? "is-invalid" : ""
+                                    }`}
                                 value={waktuMulai}
                                 onChange={(e) => setWaktuMulai(e.target.value)}
                                 placeholder="Waktu Mulai Sewa"
@@ -113,9 +121,8 @@ export default function InputStartEndTimeCalendarModal({
                         <div className="form-group position-relative has-icon-left">
                             <input
                                 type="datetime-local"
-                                className={`form-control ${
-                                    errors.waktu_selesai ? "is-invalid" : ""
-                                }`}
+                                className={`form-control ${errors.waktu_selesai ? "is-invalid" : ""
+                                    }`}
                                 value={waktuSelesai}
                                 onChange={(e) =>
                                     setWaktuSelesai(e.target.value)
@@ -133,10 +140,10 @@ export default function InputStartEndTimeCalendarModal({
                     </div>
                 </div>
             </form>
-            <CalendarSchedule
+            {isEventLoaded && <CalendarSchedule
                 events={getEvents()}
                 onSelectSlot={handleSelectSlot}
-            />
+            />}
         </Modal>
     );
 }

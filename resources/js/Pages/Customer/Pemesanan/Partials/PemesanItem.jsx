@@ -8,6 +8,8 @@ import React from "react";
 export default function PemesananItem({ item }) {
     const pemesanan = new Pemesanan(item);
 
+    const [openCalendarUpdate, setOpenCalendarUpdate] = React.useState(false)
+
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
     const handleDelete = () => {
         router.delete(
@@ -16,12 +18,31 @@ export default function PemesananItem({ item }) {
         setOpenDeleteModal(false);
     };
 
+    const handleUpdate = ({ start, end }, { setErrors }) => {
+        const data = {
+            'waktu_mulai': start,
+            'waktu_selesai': end
+        }
+
+        router.put(route('customer.pemesanan.update', {
+            id: pemesanan.id,
+        }), data, {
+            onError: setErrors
+        })
+
+        setOpenCalendarUpdate(false)
+    }
+
     return (
         <div className="card my-1">
             <InputStartEndTimeCalendarModal
+                start={`${pemesanan.tanggal_booking} ${pemesanan.waktu_mulai}`}
+                end={`${pemesanan.tanggal_booking} ${pemesanan.waktu_selesai}`}
+                onClose={() => setOpenCalendarUpdate(false)}
+                onSave={handleUpdate}
                 exceptId={pemesanan.id}
                 lapanganId={pemesanan.lapangan_id}
-                open={true}
+                open={openCalendarUpdate}
                 title={`Ubah waktu pemesanana ${pemesanan.lapangan.nama}`}
             />
 
@@ -45,9 +66,9 @@ export default function PemesananItem({ item }) {
                         <h5 className="card-title">
                             {pemesanan.lapangan.nama}
                         </h5>
-                        <div class="dropdown">
+                        <div className="dropdown">
                             <button
-                                class="btn "
+                                className="btn "
                                 type="button"
                                 data-bs-toggle="dropdown"
                                 aria-haspopup="true"
@@ -56,16 +77,16 @@ export default function PemesananItem({ item }) {
                                 <i className="bi bi-three-dots-vertical"></i>
                             </button>
                             <div
-                                class="dropdown-menu"
+                                className="dropdown-menu"
                                 aria-labelledby="dropdownMenuButton"
                             >
-                                <a class="dropdown-item" href="#">
+                                <button onClick={() => setOpenCalendarUpdate(true)} className="dropdown-item" href="#">
                                     Ubah Waktu Pemesanan
-                                </a>
+                                </button>
                                 <hr className="my-0" />
                                 <button
                                     type="button"
-                                    class="dropdown-item text-danger"
+                                    className="dropdown-item text-danger"
                                     onClick={() => setOpenDeleteModal(true)}
                                 >
                                     Hapus

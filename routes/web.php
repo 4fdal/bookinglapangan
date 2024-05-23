@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\CustomerCheckoutController;
 use App\Http\Controllers\CustomerLapanganController;
 use App\Http\Controllers\CustomerPemesananController;
 use App\Http\Controllers\LapanganController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -22,6 +22,10 @@ Route::as('customer.')->group(function () {
         Route::post('/', [CustomerPemesananController::class, 'store'])->name('store');
         Route::put('/{id}', [CustomerPemesananController::class, 'update'])->name('update');
         Route::delete('/{id}', [CustomerPemesananController::class, 'destroy'])->name('destroy');
+
+        Route::prefix('checkout')->as('checkout.')->group(function () {
+            Route::get('/', [CustomerCheckoutController::class, 'index'])->name('index');
+        });
     });
 });
 

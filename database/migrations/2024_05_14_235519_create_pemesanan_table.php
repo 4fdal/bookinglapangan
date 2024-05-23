@@ -19,6 +19,7 @@ return new class extends Migration
             $table->time('waktu_mulai')->nullable();
             $table->time('waktu_selesai')->nullable();
             $table->string('status', 50)->default('PENDING');
+            $table->text('catatan_pesanan')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');

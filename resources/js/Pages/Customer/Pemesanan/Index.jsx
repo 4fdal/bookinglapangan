@@ -19,6 +19,7 @@ export default function Index({ auth: { user }, message, items = [] }) {
             message={message}
             user={user}
             header="Pemesanan"
+            back={route('welcome')}
         >
             <div className="row">
                 <div className="col-md-8">
@@ -65,9 +66,9 @@ export default function Index({ auth: { user }, message, items = [] }) {
                             </div>
                             <div className="card-footer">
                                 <div className="row">
-                                    <button className="btn btn-primary">
+                                    <Link href={route('customer.pemesanan.checkout.index')} className="btn btn-primary">
                                         <strong>Checkout</strong>
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

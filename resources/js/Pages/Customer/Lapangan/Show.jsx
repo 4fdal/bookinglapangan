@@ -1,7 +1,6 @@
 import CalendarSchedule from "@/Components/CalendarSchedule";
 import Carousel from "@/Components/Carousel";
 import Modal from "@/Components/Modal";
-import ModalOrderField from "@/Components/ModalOrderField";
 import { currency } from "@/Helpers/GlobalHelpers";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import { Head } from "@inertiajs/react";
@@ -25,8 +24,6 @@ export default function Show({ auth: { user }, message, item }) {
         title: null,
         source: null,
     });
-
-    // const [openModalOrderField, setOpenModalOrderField] = React.useState(false);
 
     const handleImageClick = (e, { source, index }) => {
         setModalImage({
@@ -83,11 +80,6 @@ export default function Show({ auth: { user }, message, item }) {
             >
                 <img src={modalImage.source} className="w-100" />
             </Modal>
-            {/* 
-            <ModalOrderField
-                open={openModalOrderField}
-                onClose={() => setOpenModalOrderField(false)}
-            /> */}
 
             <div className="card mb-3">
                 <div className="card-content p-3">
