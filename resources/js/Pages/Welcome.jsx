@@ -1,13 +1,23 @@
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import CardLapangan from "./Partials/CardLapangan";
+import React from "react";
+import { router } from "@inertiajs/react";
 
 export default function Welcome({
     auth: { user },
     message,
     lapangan_paginate,
 }) {
+    const [search, setSearch] = React.useState(null);
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        router.visit(route("welcome", { s: search }));
+    };
+
     return (
         <CustomerLayout
+            header="Lapangan"
             dataBreadcrumb={[{ label: "Sewa Lapangan", active: true }]}
             user={user}
             message={message}
@@ -22,15 +32,21 @@ export default function Welcome({
                         <h3 className="text-center text-white">
                             Booking Lapangan Online
                         </h3>
-                        <div className="d-flex flex-row items-align-center">
-                            <input
-                                placeholder="Cari Lapangan . . ."
-                                className="form-control"
-                            />
-                            <button className="btn btn-primary">
-                                <i className="bi bi-search"></i>
-                            </button>
-                        </div>
+                        <form method="get" onSubmit={handleSearch}>
+                            <div className="d-flex flex-row items-align-center">
+                                <input
+                                    defaultValue={new URLSearchParams(
+                                        window.location.search
+                                    ).get("s")}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    placeholder="Cari Lapangan . . ."
+                                    className="form-control"
+                                />
+                                <button className="btn btn-primary">
+                                    <i className="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             }

@@ -19,7 +19,7 @@ export default function Index({ auth: { user }, message, items = [] }) {
             message={message}
             user={user}
             header="Pemesanan"
-            back={route('welcome')}
+            back={route("welcome")}
         >
             <div className="row">
                 <div className="col-md-8">
@@ -43,6 +43,16 @@ export default function Index({ auth: { user }, message, items = [] }) {
                             key={"card-item-pemesanan-" + index}
                         />
                     ))}
+
+                    <div className="row my-5">
+                        <Link
+                            href={route("customer.pemesanan.riwayat.index")}
+                            className="text-primary "
+                        >
+                            <i className="bi bi-clock-history"></i>
+                            &nbsp; Riwayat Pemesanan
+                        </Link>
+                    </div>
                 </div>
                 <div className="col-md-4">
                     <div className="card">
@@ -66,7 +76,12 @@ export default function Index({ auth: { user }, message, items = [] }) {
                             </div>
                             <div className="card-footer">
                                 <div className="row">
-                                    <Link href={route('customer.pemesanan.checkout.index')} className="btn btn-primary">
+                                    <Link
+                                        href={route(
+                                            "customer.pemesanan.checkout.index"
+                                        )}
+                                        className="btn btn-primary"
+                                    >
                                         <strong>Checkout</strong>
                                     </Link>
                                 </div>

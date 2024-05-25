@@ -31,6 +31,7 @@ class CustomerLapanganController extends Controller
         $date_now = Carbon::now()->format('Y-m-d');
 
         $pemesanan = Pemesanan::where('tanggal_booking', '>=', $date_now)
+            ->where('status', Pemesanan::STATUS_PROCESS)
             ->where('lapangan_id', $id);
 
         if ($except_id != null) {

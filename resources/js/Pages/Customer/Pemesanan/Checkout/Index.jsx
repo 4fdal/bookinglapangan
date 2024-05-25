@@ -15,11 +15,12 @@ export default function Index({
 }) {
     user = new User(user);
 
+    const [pemabayaranErrors, setPembayaranErrors] = React.useState({});
     const [errors, setErrors] = React.useState({});
     const [name, setName] = React.useState(user.name);
     const [email, setEmail] = React.useState(user.email);
     const [no_ponsel, setNoPonsel] = React.useState(user.no_ponsel);
-    const [alamat, setAlamat] = React.useState(user.pelanggan.alamat);
+    const [alamat, setAlamat] = React.useState(user?.pelanggan?.alamat);
     const [catatan_pesanan, setCatatanPesanan] = React.useState(
         user.catatan_pesanan
     );
@@ -58,6 +59,25 @@ export default function Index({
         );
     };
 
+    const handleDonePayment = (bukti) => {
+        const pemesanan_ids = items.map((item) => item.id);
+        router.post(
+            route("customer.pemesanan.pembayaran.store"),
+            {
+                pemesanan_ids,
+                bukti,
+                catatan_pesanan,
+            },
+            {
+                onError: setPembayaranErrors,
+                onSuccess: () => {
+                    setPembayaranErrors({});
+                    seOpentModalBuktiPembayaran(false);
+                },
+            }
+        );
+    };
+
     return (
         <CustomerLayout
             dataBreadcrumb={[
@@ -71,8 +91,10 @@ export default function Index({
             header={"Checkout"}
         >
             <ModalUploadButkiPembayaran
+                errors={pemabayaranErrors}
                 open={openModalUploadButkiPembayaran}
                 onClose={() => seOpentModalBuktiPembayaran(false)}
+                onDonePayment={handleDonePayment}
                 rekbank={rekening_penerima.bank}
                 reknomor={rekening_penerima.nomor}
                 rekpemilik={rekening_penerima.pemilik}

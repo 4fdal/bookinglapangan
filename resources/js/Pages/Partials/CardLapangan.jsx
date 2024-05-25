@@ -1,6 +1,7 @@
 import Carousel from "@/Components/Carousel";
+import InputStartEndTimeCalendarModal from "@/Components/InputStartEndTimeCalendarModal";
 import { currency } from "@/Helpers/GlobalHelpers";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import React from "react";
 export default function CardLapangan({
     sources = [],
@@ -10,8 +11,29 @@ export default function CardLapangan({
     location,
     id,
 }) {
+    const [openInputModal, setOpenInputModal] = React.useState(false);
+    const [start, setStart] = React.useState(null);
+    const [end, setEnd] = React.useState(null);
+
+    const handleSimpanPemesanan = ({ start, end }) => {
+        router.post(route("customer.pemesanan.store"), {
+            lapangan_id: id,
+            waktu_mulai: start,
+            waktu_selesai: end,
+        });
+    };
+
     return (
         <>
+            <InputStartEndTimeCalendarModal
+                title={title}
+                end={end}
+                start={start}
+                open={openInputModal}
+                onClose={() => setOpenInputModal(false)}
+                lapanganId={id}
+                onSave={handleSimpanPemesanan}
+            />
             <div className="card">
                 <div className="card-content">
                     <div className="card-body d-flex flex-row justify-content-between">
@@ -33,7 +55,10 @@ export default function CardLapangan({
                         {/* <p className="card-text">{description}</p> */}
 
                         <div className="d-flex justify-content-between">
-                            <button className="btn btn-primary">
+                            <button
+                                onClick={() => setOpenInputModal(true)}
+                                className="btn btn-primary"
+                            >
                                 <i className="bi bi-calendar-plus"></i>
                                 &nbsp; Pesan Sekarang
                             </button>

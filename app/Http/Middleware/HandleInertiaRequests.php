@@ -31,7 +31,7 @@ class HandleInertiaRequests extends Middleware
     {
 
         $user = $request->user();
-        $user->pelanggan;
+        if (isset($user->pelanggan)) $user->pelanggan =  $user->pelanggan ?? null;
 
         return [
             ...parent::share($request),

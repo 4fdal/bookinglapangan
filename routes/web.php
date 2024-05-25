@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerCheckoutController;
 use App\Http\Controllers\CustomerLapanganController;
+use App\Http\Controllers\CustomerPambayaranController;
 use App\Http\Controllers\CustomerPemesananController;
 use App\Http\Controllers\CustomerProfileController;
 use App\Http\Controllers\CustomerRiwayatPemesanan;
@@ -27,7 +28,10 @@ Route::as('customer.')->group(function () {
 
         Route::prefix('checkout')->as('checkout.')->group(function () {
             Route::get('/', [CustomerCheckoutController::class, 'index'])->name('index');
-            Route::post('/', [CustomerCheckoutController::class, 'store'])->name('store');
+        });
+
+        Route::prefix('pembayaran')->as('pembayaran.')->group(function () {
+            Route::post('/', [CustomerPambayaranController::class, 'store'])->name('store');
         });
 
         Route::prefix('riwayat')->as('riwayat.')->group(function () {
@@ -36,6 +40,7 @@ Route::as('customer.')->group(function () {
     });
 
     Route::prefix('profile')->as('profile.')->group(function () {
+        Route::get('/', [CustomerProfileController::class, 'edit'])->name('edit');
         Route::put('/', [CustomerProfileController::class, 'update'])->name('update');
     });
 });

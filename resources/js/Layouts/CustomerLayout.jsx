@@ -45,7 +45,10 @@ export default function CustomerLayout({
                         <div className="container">
                             <ul>
                                 <li className="menu-item active">
-                                    <a href="index.html" className="menu-link">
+                                    <a
+                                        href={route("welcome")}
+                                        className="menu-link"
+                                    >
                                         <span>
                                             <i className="bi bi-pin-map" /> Sewa
                                             Lapangan

@@ -9,7 +9,8 @@ export default function ModalUploadButkiPembayaran({
     rekpemilik,
     totalPembayaran = 0,
     onClose = () => {},
-    onDonePayment = () => {},
+    onDonePayment = (file) => {},
+    errors = {},
 }) {
     const inputFileRef = React.useRef();
     const [file, setFile] = React.useState(null);
@@ -40,6 +41,19 @@ export default function ModalUploadButkiPembayaran({
             }
             title="Upload Bukti Pembayaran"
         >
+            {Object.values(errors).map((error) => (
+                <div
+                    className={`alert alert-danger d-flex flex-row justify-content-between`}
+                >
+                    <div className="d-flex">
+                        <i className={`bi bi-exclamation-diamond`}></i>
+                        <div className="d-flex flex-column">
+                            <h6 className="alert-heading my-0">{error}</h6>
+                        </div>
+                    </div>
+                </div>
+            ))}
+
             <p className="my-0">
                 Silahkan anda lanjutkan pembayaran sebagai berikut :
             </p>

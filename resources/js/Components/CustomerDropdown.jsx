@@ -1,8 +1,6 @@
 import { Link } from "@inertiajs/react";
 
 export default function CustomerDropdown({ user, onLogout }) {
-  
-
     return (
         <div className="header-top-right">
             {user ? (
@@ -34,7 +32,7 @@ export default function CustomerDropdown({ user, onLogout }) {
                         <li>
                             <Link
                                 className="dropdown-item text-primary d-flex flex-row justify-content-between"
-                                href={route("profile.edit")}
+                                href={route("customer.pemesanan.index")}
                             >
                                 <span>
                                     <i className="bi bi-cart"></i>
@@ -43,10 +41,22 @@ export default function CustomerDropdown({ user, onLogout }) {
                                 <span class="badge bg-primary">0</span>
                             </Link>
                         </li>
+
+                        <li>
+                            <Link
+                                className="dropdown-item text-primary d-flex flex-row justify-content-between"
+                                href={route("customer.pemesanan.riwayat.index")}
+                            >
+                                <span>
+                                    <i className="bi bi-clock-history"></i>
+                                    &nbsp;Riwayat Pemesanan
+                                </span>
+                            </Link>
+                        </li>
                         <li>
                             <Link
                                 className="dropdown-item text-primary"
-                                href={route("profile.edit")}
+                                href={route("customer.profile.edit")}
                             >
                                 <i className="bi bi-people"></i>
                                 &nbsp;Akun Saya
