@@ -12,6 +12,7 @@ export default function Show({ auth: { user }, message, item }) {
 
     const [startOrder, setStartOrder] = React.useState(null);
     const [endOrder, setEndOrder] = React.useState(null);
+    const [events, setEvents] = React.useState([]);
     const [myEvent, setMyEvent] = React.useState({
         id: -1,
         title: null,
@@ -58,6 +59,28 @@ export default function Show({ auth: { user }, message, item }) {
             });
         }
     };
+
+    const loadEvents = () => {
+        let params = { id: item.id };
+
+        fetch(route("api.lapangan.schedule", params))
+            .then(async (res) => {
+                const { data } = await res.json();
+                setEvents(
+                    data.map((item) => ({
+                        ...item,
+                        start: new Date(item.start),
+                        end: new Date(item.end),
+                    }))
+                );
+            })
+            .catch((err) => console.error(err.message))
+            .finally(() => setIsEventLoaded(true));
+    };
+
+    React.useEffect(() => {
+        loadEvents();
+    }, []);
 
     return (
         <CustomerLayout
@@ -112,7 +135,7 @@ export default function Show({ auth: { user }, message, item }) {
                             <div className="card-body">
                                 <h4 className="card-title">Pemesanan</h4>
                                 <CalendarSchedule
-                                    events={[myEvent]}
+                                    events={[...events, myEvent]}
                                     onSelectSlot={handleSelectSlot}
                                 />
                             </div>

@@ -15,7 +15,9 @@ class CustomerCheckoutController extends Controller
     public function index()
     {
         $user_id = Auth::user()->id;
-        $pemesanan = Pemesanan::with(['user', 'lapangan'])->where('user_id', $user_id)->get();
+        $pemesanan = Pemesanan::with(['user', 'lapangan'])
+        ->where('status', Pemesanan::STATUS_PENDING)
+        ->where('user_id', $user_id)->get();
 
         return Inertia::render('Customer/Pemesanan/Checkout/Index', [
             'items' => $pemesanan,

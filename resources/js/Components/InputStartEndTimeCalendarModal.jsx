@@ -57,7 +57,6 @@ export default function InputStartEndTimeCalendarModal({
         return listEvents;
     };
 
-    console.log(start, end)
 
     React.useEffect(() => {
         setWaktuMulai(start)

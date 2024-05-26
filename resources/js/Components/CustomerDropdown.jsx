@@ -38,7 +38,9 @@ export default function CustomerDropdown({ user, onLogout }) {
                                     <i className="bi bi-cart"></i>
                                     &nbsp;Cart
                                 </span>
-                                <span class="badge bg-primary">0</span>
+                                <span class="badge bg-primary">
+                                    {user.cart}
+                                </span>
                             </Link>
                         </li>
 
@@ -84,8 +86,6 @@ export default function CustomerDropdown({ user, onLogout }) {
                     </Link>
                 </div>
             )}
-
-            
         </div>
     );
 }

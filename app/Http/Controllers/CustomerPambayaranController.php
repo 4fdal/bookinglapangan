@@ -18,9 +18,10 @@ class CustomerPambayaranController extends Controller
 
         $request->validate([
             'pemesanan_ids.*' => ['required', 'exists:pemesanan,id'],
-            'catatan_pemesanan' => ['nullable'],
+            'catatan_pesanan' => ['nullable'],
             'bukti' => ['required', 'file'],
         ]);
+
 
         $file_bukti = $request->file('bukti');
         $bukti = [
@@ -40,8 +41,9 @@ class CustomerPambayaranController extends Controller
                 'tanggal' =>  date('Y-m-d'),
                 'bukti' => json_encode($bukti),
                 'status' => Pembayaran::STATUS_PAYMENT,
-                'catatan_pemesanan' => $request->catatan_pemesanan,
+                'catatan_pemesanan' => $request->catatan_pesanan,
             ]);
+
 
             Pemesanan::whereIn('id', $request->pemesanan_ids)
                 ->where('status', Pemesanan::STATUS_PENDING)

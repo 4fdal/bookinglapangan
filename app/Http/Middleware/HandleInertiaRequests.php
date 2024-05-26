@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Pemesanan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -32,6 +34,10 @@ class HandleInertiaRequests extends Middleware
 
         $user = $request->user();
         if (isset($user->pelanggan)) $user->pelanggan =  $user->pelanggan ?? null;
+
+        if ($user->hasRole(User::ROLE_CUSTOMER)) {
+            $user->cart = Pemesanan::where('status', Pemesanan::STATUS_PENDING)->count();
+        }
 
         return [
             ...parent::share($request),
