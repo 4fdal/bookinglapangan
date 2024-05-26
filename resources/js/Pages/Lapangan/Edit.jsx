@@ -8,7 +8,7 @@ export default function Edit({ auth, message, item }) {
 
     const handleSubmit = (e, data) => {
         e.preventDefault();
-        router.post(route('lapangan.update', { id: item.id }), data)
+        router.post(route('admin.lapangan.update', { id: item.id }), data)
     };
 
 
