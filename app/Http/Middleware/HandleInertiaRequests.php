@@ -33,10 +33,13 @@ class HandleInertiaRequests extends Middleware
     {
 
         $user = $request->user();
-        if (isset($user->pelanggan)) $user->pelanggan =  $user->pelanggan ?? null;
 
-        if ($user->hasRole(User::ROLE_CUSTOMER)) {
-            $user->cart = Pemesanan::where('status', Pemesanan::STATUS_PENDING)->count();
+        if (isset($user)) {
+            if (isset($user->pelanggan)) $user->pelanggan =  $user->pelanggan ?? null;
+
+            if ($user->hasRole(User::ROLE_CUSTOMER)) {
+                $user->cart = Pemesanan::where('status', Pemesanan::STATUS_PENDING)->count();
+            }
         }
 
         return [
