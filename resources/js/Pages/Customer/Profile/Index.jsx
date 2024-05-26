@@ -11,7 +11,7 @@ export default function Index({ auth: { user }, message }) {
     const [name, setName] = React.useState(profile.name);
     const [email, setEmail] = React.useState(profile.email);
     const [no_ponsel, setNoPonsel] = React.useState(profile.no_ponsel);
-    const [alamat, setAlamat] = React.useState(profile.pelanggan.alamat);
+    const [alamat, setAlamat] = React.useState(profile?.pelanggan?.alamat);
     const [password, setPassword] = React.useState("");
     const [password_confirmation, setPasswordConformation] = React.useState("");
 

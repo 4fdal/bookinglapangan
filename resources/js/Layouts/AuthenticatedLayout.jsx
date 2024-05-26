@@ -16,11 +16,20 @@ const menus = [
         link: route("admin.pemesanan.index"),
     },
     {
+        label: "Kalender",
+        icon: "bi-calendar-week",
+        link: route("admin.schedule.index"),
+    },
+    {
         label: "Lapangan",
         icon: "bi-pin-map",
         link: route("admin.lapangan.index"),
     },
-    { label: "Pelanggan", icon: "bi-person", link: "#" },
+    {
+        label: "Pelanggan",
+        icon: "bi-person",
+        link: route("admin.pelanggan.index"),
+    },
 ];
 
 export default function AuthenticatedLayout({
@@ -94,14 +103,14 @@ export default function AuthenticatedLayout({
                                                 Akun Saya
                                             </Link>
                                         </li>
-                                        <li>
+                                        {/* <li>
                                             <a
                                                 className="dropdown-item"
                                                 href="#"
                                             >
                                                 Pengaturan
                                             </a>
-                                        </li>
+                                        </li> */}
                                         <li>
                                             <hr className="dropdown-divider" />
                                         </li>

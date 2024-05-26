@@ -6,9 +6,12 @@ use App\Http\Controllers\CustomerPambayaranController;
 use App\Http\Controllers\CustomerPemesananController;
 use App\Http\Controllers\CustomerProfileController;
 use App\Http\Controllers\CustomerRiwayatPemesanan;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LapanganController;
+use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -50,9 +53,7 @@ Route::as('customer.')->group(function () {
 
 
 Route::prefix('admin')->as('admin.')->middleware(['auth', 'role:' . User::ROLE_ADMIN])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->middleware(['verified'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['verified'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -76,10 +77,14 @@ Route::prefix('admin')->as('admin.')->middleware(['auth', 'role:' . User::ROLE_A
     });
 
     Route::prefix('pelanggan')->as('pelanggan.')->group(function () {
-        Route::get('/', [PemesananController::class, 'index'])->name('index');
+        Route::get('/', [PelangganController::class, 'index'])->name('index');
+        Route::get('/{user_id}', [PelangganController::class, 'show'])->name('show');
     });
 
-    
+
+    Route::prefix('schedule')->as('schedule.')->group(function () {
+        Route::get('/', [ScheduleController::class, 'index'])->name('index');
+    });
 });
 
 require __DIR__ . '/auth.php';
