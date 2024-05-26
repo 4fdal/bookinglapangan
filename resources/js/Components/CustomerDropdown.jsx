@@ -85,10 +85,7 @@ export default function CustomerDropdown({ user, onLogout }) {
                 </div>
             )}
 
-            {/* Burger button responsive */}
-            <a href="#" className="burger-btn d-block d-xl-none">
-                <i className="bi bi-justify fs-3" />
-            </a>
+            
         </div>
     );
 }

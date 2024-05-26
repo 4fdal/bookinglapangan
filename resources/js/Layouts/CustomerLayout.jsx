@@ -1,7 +1,9 @@
 import AlertMazer from "@/Components/AlertMazer";
 import Breadcrumb from "@/Components/Breadcrumb";
 import CustomerDropdown from "@/Components/CustomerDropdown";
+import { classList } from "@/Helpers/GlobalHelpers";
 import { Head, Link, router } from "@inertiajs/react";
+import React from "react";
 
 export default function CustomerLayout({
     user,
@@ -13,6 +15,8 @@ export default function CustomerLayout({
     headerChildren,
     dataBreadcrumb = [],
 }) {
+    const [navbarActive, setNavbarActive] = React.useState(false);
+
     const handleLogout = (e) => {
         e.preventDefault();
         router.post(route("logout"));
@@ -39,9 +43,24 @@ export default function CustomerLayout({
                                 onLogout={handleLogout}
                                 user={user}
                             />
+
+                            {/* Burger button responsive */}
+                            <a
+                                onClick={() => setNavbarActive(!navbarActive)}
+                                href="#"
+                                className="burger-btn d-block d-xl-none"
+                            >
+                                <i className="bi bi-justify fs-3" />
+                            </a>
                         </div>
                     </div>
-                    <nav className="main-navbar">
+                    <nav
+                        className={classList({
+                            "main-navbar": true,
+                            active: navbarActive,
+                            "bg-primary": true,
+                        })}
+                    >
                         <div className="container">
                             <ul>
                                 <li className="menu-item active">

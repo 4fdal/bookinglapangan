@@ -41,6 +41,8 @@ export default function AuthenticatedLayout({
     message,
     dataBreadcrumb = [],
 }) {
+    const [navbarActive, setNavbarActive] = React.useState(false);
+
     const handleLogout = (e) => {
         e.preventDefault();
         router.post(route("logout"));
@@ -127,6 +129,9 @@ export default function AuthenticatedLayout({
                                 {/* Burger button responsive */}
                                 <a
                                     href="#"
+                                    onClick={() =>
+                                        setNavbarActive(!navbarActive)
+                                    }
                                     className="burger-btn d-block d-xl-none"
                                 >
                                     <i className="bi bi-justify fs-3" />
@@ -134,7 +139,13 @@ export default function AuthenticatedLayout({
                             </div>
                         </div>
                     </div>
-                    <nav className="main-navbar">
+                    <nav
+                        className={classList({
+                            "main-navbar": true,
+                            active: navbarActive,
+                            "bg-primary": true,
+                        })}
+                    >
                         <div className="container">
                             <ul>
                                 {menus.map((menuItem) => (
