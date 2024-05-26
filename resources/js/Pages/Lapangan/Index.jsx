@@ -35,12 +35,16 @@ export default function Index(props) {
 
     return (
         <AuthenticatedLayout
+            dataBreadcrumb={[
+                { label: "Dashboard", link: route("admin.dashboard") },
+                { label: "Lapangan", link: "#", active: true },
+            ]}
             message={message}
             user={auth.user}
             header="Laparangan"
             headerRight={
                 <Link
-                    href={route("lapangan.create")}
+                    href={route("admin.lapangan.create")}
                     className="btn btn-primary"
                 >
                     <i className="bi bi-plus"></i>

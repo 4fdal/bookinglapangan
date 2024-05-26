@@ -14,7 +14,7 @@ export default function Create({ auth, message }) {
         <AuthenticatedLayout
             message={message}
             user={auth.user}
-            back={route("lapangan.index")}
+            back={route("admin.lapangan.index")}
             header="Tambah Laparangan"
         >
             <Head title="Tambah Lapangan"></Head>

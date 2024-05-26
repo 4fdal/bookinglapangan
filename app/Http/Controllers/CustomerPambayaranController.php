@@ -66,4 +66,49 @@ class CustomerPambayaranController extends Controller
             throw $th;
         }
     }
+
+    public function update(Request $request, $id)
+    {
+        $pembayaran = Pembayaran::find($id);
+        $file_bukti_lama = json_decode($pembayaran->bukti);
+
+        $request->validate([
+            'bukti' => ['required', 'file'],
+        ]);
+
+        $file_bukti = $request->file('bukti');
+        $bukti = [
+            'path' => $file_bukti->store('pembayaran', 'public'),
+            'originalName' => $file_bukti->getClientOriginalName(),
+            'mime' => $file_bukti->getMimeType(),
+            'extension' => $file_bukti->getClientOriginalExtension(),
+        ];
+
+        try {
+            DB::beginTransaction();
+
+            $pembayaran->update([
+                'tanggal' =>  date('Y-m-d'),
+                'bukti' => json_encode($bukti),
+                'status' => Pembayaran::STATUS_PAYMENT,
+                'catatan_pemesanan' => $request->catatan_pemesanan,
+            ]);
+
+            DB::commit();
+
+            if (isset($file_bukti_lama->path)) Storage::delete($file_bukti_lama->path);
+
+            return redirect()->route('customer.pemesanan.riwayat.index')->withMessage([
+                'type' => 'success',
+                'title' => 'Berhasil',
+                'message' => 'Pembayaran berhasil kami terima, silahkan tunggu beberapa saat, hingga pemesanan anda kami konfirmasi!',
+            ]);
+        } catch (\Throwable $th) {
+
+            Storage::delete($bukti['path']);
+
+            DB::rollBack();
+            throw $th;
+        }
+    }
 }

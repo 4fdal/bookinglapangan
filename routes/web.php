@@ -7,8 +7,10 @@ use App\Http\Controllers\CustomerPemesananController;
 use App\Http\Controllers\CustomerProfileController;
 use App\Http\Controllers\CustomerRiwayatPemesanan;
 use App\Http\Controllers\LapanganController;
+use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -32,6 +34,7 @@ Route::as('customer.')->group(function () {
 
         Route::prefix('pembayaran')->as('pembayaran.')->group(function () {
             Route::post('/', [CustomerPambayaranController::class, 'store'])->name('store');
+            Route::post('/{id}', [CustomerPambayaranController::class, 'update'])->name('update');
         });
 
         Route::prefix('riwayat')->as('riwayat.')->group(function () {
@@ -46,7 +49,7 @@ Route::as('customer.')->group(function () {
 });
 
 
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->as('admin.')->middleware(['auth', 'role:' . User::ROLE_ADMIN])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->middleware(['verified'])->name('dashboard');
@@ -66,6 +69,17 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
         Route::delete('/{id}/destroy', [LapanganController::class, 'destroy'])->name('destroy');
     });
+
+    Route::prefix('pemesanan')->as('pemesanan.')->group(function () {
+        Route::get('/', [PemesananController::class, 'index'])->name('index');
+        Route::put('/{pembayaran_id}', [PemesananController::class, 'update'])->name('update');
+    });
+
+    Route::prefix('pelanggan')->as('pelanggan.')->group(function () {
+        Route::get('/', [PemesananController::class, 'index'])->name('index');
+    });
+
+    
 });
 
 require __DIR__ . '/auth.php';

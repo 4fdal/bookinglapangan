@@ -1,6 +1,27 @@
 import React from "react";
 import { Link, router } from "@inertiajs/react";
 import AlertMazer from "@/Components/AlertMazer";
+import Breadcrumb from "@/Components/Breadcrumb";
+import { classList } from "@/Helpers/GlobalHelpers";
+
+const menus = [
+    {
+        label: "Dashboard",
+        icon: "bi-grid-fill",
+        link: route("admin.dashboard"),
+    },
+    {
+        label: "Pemesanan",
+        icon: "bi-cup-hot",
+        link: route("admin.pemesanan.index"),
+    },
+    {
+        label: "Lapangan",
+        icon: "bi-pin-map",
+        link: route("admin.lapangan.index"),
+    },
+    { label: "Pelanggan", icon: "bi-person", link: "#" },
+];
 
 export default function AuthenticatedLayout({
     user,
@@ -9,19 +30,22 @@ export default function AuthenticatedLayout({
     children,
     back,
     message,
+    dataBreadcrumb = [],
 }) {
-
     const handleLogout = (e) => {
         e.preventDefault();
         router.post(route("logout"));
     };
 
+    const getActiveMenuItem = (link = "") => {
+        return location.href.toLowerCase().indexOf(link.toLowerCase()) != -1;
+    };
 
     return (
         <div id="app">
             <AlertMazer {...message} />
             <div id="main" className="layout-horizontal">
-                <header className="mb-5">
+                <header className="mb-2">
                     <div className="header-top">
                         <div className="container">
                             <div className="logo">
@@ -63,7 +87,9 @@ export default function AuthenticatedLayout({
                                         <li>
                                             <Link
                                                 className="dropdown-item"
-                                                href={route("profile.edit")}
+                                                href={route(
+                                                    "admin.profile.edit"
+                                                )}
                                             >
                                                 Akun Saya
                                             </Link>
@@ -102,47 +128,38 @@ export default function AuthenticatedLayout({
                     <nav className="main-navbar">
                         <div className="container">
                             <ul>
-                                <li className="menu-item  ">
-                                    <a href="index.html" className="menu-link">
-                                        <span>
-                                            <i className="bi bi-grid-fill" />{" "}
-                                            Dashboard
-                                        </span>
-                                    </a>
-                                </li>
-                                <li className="menu-item  ">
-                                    <a href="index.html" className="menu-link">
-                                        <span>
-                                            <i className="bi bi-cup-hot" />{" "}
-                                            Pemesanan
-                                        </span>
-                                    </a>
-                                </li>
-                                <li className="menu-item  ">
-                                    <Link
-                                        href={route("lapangan.index")}
-                                        className="menu-link"
+                                {menus.map((menuItem) => (
+                                    <li
+                                        className={classList({
+                                            "menu-item": true,
+                                            active: getActiveMenuItem(
+                                                menuItem.link
+                                            ),
+                                        })}
                                     >
-                                        <span>
-                                            <i className="bi bi-pin-map" />{" "}
-                                            Lapangan
-                                        </span>
-                                    </Link>
-                                </li>
-                                <li className="menu-item  ">
-                                    <a href="index.html" className="menu-link">
-                                        <span>
-                                            <i className="bi bi-people" />{" "}
-                                            Pelanggan
-                                        </span>
-                                    </a>
-                                </li>
+                                        <Link
+                                            href={menuItem.link}
+                                            className={classList({
+                                                "menu-link": true,
+                                            })}
+                                        >
+                                            <span>
+                                                <i
+                                                    className={`bi ${menuItem.icon}`}
+                                                />{" "}
+                                                {menuItem.label}
+                                            </span>
+                                        </Link>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </nav>
                 </header>
                 <div className="content-wrapper container">
-                    <div className="page-heading ">
+                    <Breadcrumb data={dataBreadcrumb} />
+
+                    <div className="page-heading my-2">
                         <div className="d-flex justify-content-between">
                             <h3>
                                 {back && (

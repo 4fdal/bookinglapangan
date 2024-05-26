@@ -23,7 +23,12 @@ class CustomerRiwayatPemesanan extends Controller
 
 
         return Inertia::render('Customer/Pemesanan/Riwayat/Index', [
-            'items' => $pembayaran
+            'items' => $pembayaran,
+            'rekening_penerima' => [
+                'bank' => env('NAMA_REKENING_PENERIMA'),
+                'nomor' => env('NOMOR_REKENING_PENERIMA'),
+                'pemilik' => env('NAMA_PEMILIK_REKENING_PENERIMA'),
+            ]
         ]);
     }
 }

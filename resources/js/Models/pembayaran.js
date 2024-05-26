@@ -7,6 +7,7 @@ export const STATUS_PAID = "PAID";
 
 export default class Pembayaran {
     constructor({
+        id,
         total,
         subtotal,
         tanggal,
@@ -17,6 +18,7 @@ export default class Pembayaran {
         user = null,
         detail = [],
     }) {
+        this.id = id;
         this.total = total;
         this.subtotal = subtotal;
         this.tanggal = tanggal;

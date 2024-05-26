@@ -16,7 +16,7 @@ export default function Edit({ auth, message, item }) {
         <AuthenticatedLayout
             message={message}
             user={auth.user}
-            back={route("lapangan.index")}
+            back={route("admin.lapangan.index")}
             header={`Edit Laparangan ${item.nama}`}
         >
             <Head title="Tambah Lapangan"></Head>

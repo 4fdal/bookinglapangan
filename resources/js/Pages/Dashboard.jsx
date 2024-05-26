@@ -2,9 +2,12 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 
 export default function Dashboard({ auth }) {
-    
     return (
-        <AuthenticatedLayout user={auth.user} header="Dashboard">
+        <AuthenticatedLayout
+            user={auth.user}
+            dataBreadcrumb={[{ label: "Dashboard", link: "#", active: true }]}
+            header="Dashboard"
+        >
             <div className="page-content">
                 <section className="row">
                     <div className="col-12 col-lg-9">

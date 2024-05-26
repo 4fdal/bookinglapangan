@@ -3,7 +3,7 @@ import Pembayaran from "@/Models/pembayaran";
 import { Head } from "@inertiajs/react";
 import PembayaranItem from "./Partials/PembayaranItem";
 
-export default function Index({ auth: { user }, message, items }) {
+export default function Index({ auth: { user }, message, items, rekening_penerima }) {
     return (
         <CustomerLayout
             dataBreadcrumb={[
@@ -19,18 +19,21 @@ export default function Index({ auth: { user }, message, items }) {
             <Head title="Riwayat Pemesanan" />
 
             <div className="row">
-                <div className="col-md-12">
-                    {items.map((item, index) => {
-                        const pembayaran = new Pembayaran(item);
+                {items.map((item, index) => {
+                    const pembayaran = new Pembayaran(item);
 
-                        return (
+                    return (
+                        <div
+                            key={`item-riwayat-pemesanan-${index}`}
+                            className="col-md-6"
+                        >
                             <PembayaranItem
-                                key={`item-riwayat-pemesanan-${index}`}
+                                rekening_penerima={rekening_penerima}
                                 pembayaran={pembayaran}
                             />
-                        );
-                    })}
-                </div>
+                        </div>
+                    );
+                })}
             </div>
         </CustomerLayout>
     );

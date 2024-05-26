@@ -26,12 +26,14 @@ export default function PemesananItem({ detailItem }) {
                     </small>
 
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-md-6">
                             <strong>Lama Sewa</strong>
                             <p className="mb-0">
                                 {moment(detailItem.tanggal_booking).format(
                                     "DD-MM-YYYY"
                                 )}
+                            </p>
+                            <p className="mb-0">
                                 ( {detailItem.waktu_mulai} -{" "}
                                 {detailItem.waktu_selesai} )
                             </p>
@@ -39,7 +41,7 @@ export default function PemesananItem({ detailItem }) {
                                 {detailItem.lama_jam_sewa * 30} Menit
                             </p>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-md-6">
                             <strong>Total Pembayaran</strong>
                             <p className="mb-0">
                                 &nbsp;
