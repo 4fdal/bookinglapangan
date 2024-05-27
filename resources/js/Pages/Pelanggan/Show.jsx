@@ -22,26 +22,26 @@ export default function Index({ auth: { user }, message, item }) {
             <div className="card">
                 <div className="card-content">
                     <div className="card-body">
-                        <div class="list-group">
-                            <div class="list-group-item list-group-item-action ">
+                        <div className="list-group">
+                            <div className="list-group-item list-group-item-action ">
                                 <div className="d-flex flex-column">
                                     <strong>Nama</strong>
                                     <h5>{customer.name}</h5>
                                 </div>
                             </div>
-                            <div class="list-group-item list-group-item-action ">
+                            <div className="list-group-item list-group-item-action ">
                                 <div className="d-flex flex-column">
                                     <strong>Email</strong>
                                     <h5>{customer.email}</h5>
                                 </div>
                             </div>
-                            <div class="list-group-item list-group-item-action ">
+                            <div className="list-group-item list-group-item-action ">
                                 <div className="d-flex flex-column">
                                     <strong>No. Whatsapp</strong>
                                     <h5>{customer.no_ponsel}</h5>
                                 </div>
                             </div>
-                            <div class="list-group-item list-group-item-action ">
+                            <div className="list-group-item list-group-item-action ">
                                 <div className="d-flex flex-column">
                                     <strong>Alamat</strong>
                                     <h5>{customer.pelanggan.alamat}</h5>

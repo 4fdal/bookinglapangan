@@ -109,8 +109,8 @@ export default function InputStartEndTimeCalendarModal({
                             <div className="form-control-icon">
                                 <i className="bi bi-calendar-week" />
                             </div>
-                            <div class="invalid-feedback">
-                                <i class="bx bx-radio-circle"></i>
+                            <div className="invalid-feedback">
+                                <i className="bx bx-radio-circle"></i>
                                 {errors.waktu_mulai}
                             </div>
                         </div>
@@ -131,8 +131,8 @@ export default function InputStartEndTimeCalendarModal({
                             <div className="form-control-icon">
                                 <i className="bi bi-calendar-week" />
                             </div>
-                            <div class="invalid-feedback">
-                                <i class="bx bx-radio-circle"></i>
+                            <div className="invalid-feedback">
+                                <i className="bx bx-radio-circle"></i>
                                 {errors.waktu_selesai}
                             </div>
                         </div>

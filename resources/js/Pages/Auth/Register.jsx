@@ -46,8 +46,8 @@ export default function Register() {
                     <div className="form-control-icon">
                         <i className="bi bi-person" />
                     </div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.name}
                     </div>
                 </div>
@@ -64,8 +64,8 @@ export default function Register() {
                     <div className="form-control-icon">
                         <i className="bi bi-phone" />
                     </div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.no_ponsel}
                     </div>
                 </div>
@@ -82,8 +82,8 @@ export default function Register() {
                     <div className="form-control-icon">
                         <i className="bi bi-envelope" />
                     </div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.email}
                     </div>
                 </div>
@@ -100,8 +100,8 @@ export default function Register() {
                     <div className="form-control-icon">
                         <i className="bi bi-shield-lock" />
                     </div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.password}
                     </div>
                 </div>

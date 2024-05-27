@@ -38,8 +38,8 @@ export default function CreateEditForm({ onSubmit = (e, post) => { }, defaultDat
                     <div className="form-control-icon">
                         <i className="bi bi-pin-map" />
                     </div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.nama}
                     </div>
                 </div>
@@ -64,8 +64,8 @@ export default function CreateEditForm({ onSubmit = (e, post) => { }, defaultDat
                         placeholder="Harga Perjam (Rp. )"
                     />
                     <div className="form-control-icon">Rp.</div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.harga_per_jam}
                     </div>
                 </div>
@@ -85,8 +85,8 @@ export default function CreateEditForm({ onSubmit = (e, post) => { }, defaultDat
                     <div className="form-control-icon">
                         <i className="bi bi-geo-alt"></i>
                     </div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.lokasi}
                     </div>
                 </div>
@@ -106,8 +106,8 @@ export default function CreateEditForm({ onSubmit = (e, post) => { }, defaultDat
                     <div className="form-control-icon">
                         <i className="bi bi-body-text"></i>
                     </div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.deskripsi}
                     </div>
                 </div>

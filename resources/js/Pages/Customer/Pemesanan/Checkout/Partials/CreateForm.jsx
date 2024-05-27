@@ -35,8 +35,8 @@ export default function CreateForm({
                     <div className="form-control-icon">
                         <i className="bi bi-person" />
                     </div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.name}
                     </div>
                 </div>
@@ -56,8 +56,8 @@ export default function CreateForm({
                     <div className="form-control-icon">
                         <i className="bi bi-envelope-at" />
                     </div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.email}
                     </div>
                 </div>
@@ -78,8 +78,8 @@ export default function CreateForm({
                     <div className="form-control-icon">
                         <i className="bi bi-whatsapp" />
                     </div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.no_ponsel}
                     </div>
                 </div>
@@ -100,8 +100,8 @@ export default function CreateForm({
                     <div className="form-control-icon">
                         <i className="bi bi-house" />
                     </div>
-                    <div class="invalid-feedback">
-                        <i class="bx bx-radio-circle"></i>
+                    <div className="invalid-feedback">
+                        <i className="bx bx-radio-circle"></i>
                         {errors.alamat}
                     </div>
                 </div>
