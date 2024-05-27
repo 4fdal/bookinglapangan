@@ -71,7 +71,7 @@ class LapanganController extends Controller
 
             DB::commit();
 
-            return redirect()->route('lapangan.index')->withMessage([
+            return redirect()->route('admin.lapangan.index')->withMessage([
                 'type' => 'success',
                 'title' => 'Berhasil',
                 'message' => 'Data lapangan baru berhasil dibuat'
@@ -161,7 +161,7 @@ class LapanganController extends Controller
 
             DB::commit();
 
-            return redirect()->route('lapangan.index')->withMessage([
+            return redirect()->route('admin.lapangan.index')->withMessage([
                 'type' => 'success',
                 'title' => 'Berhasil',
                 'message' => 'Data lapangan baru berhasil diperbaruai'

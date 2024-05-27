@@ -125,9 +125,9 @@ export default function Register() {
             <div className="text-center mt-5 text-lg fs-4">
                 <p className="text-gray-600">
                     Already have an account?{" "}
-                    <a href="auth-login.html" className="font-bold">
+                    <Link href={route('login')} className="font-bold">
                         Log in
-                    </a>
+                    </Link>
                     .
                 </p>
             </div>

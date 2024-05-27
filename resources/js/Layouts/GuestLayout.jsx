@@ -9,7 +9,7 @@ export default function GuestLayout({ children }) {
                         <div className="auth-logo">
                             <Link href={route("welcome")}>
                                 <img
-                                    src="./assets/compiled/svg/logo.svg"
+                                    src="/assets/static/images/logo/logo.png"
                                     alt="Logo"
                                 />
                             </Link>

@@ -62,7 +62,7 @@ export default function AuthenticatedLayout({
                             <div className="logo">
                                 <a href="index.html">
                                     <img
-                                        src="/assets/compiled/svg/logo.svg"
+                                        src="/assets/static/images/logo/logo.png"
                                         alt="Logo"
                                     />
                                 </a>

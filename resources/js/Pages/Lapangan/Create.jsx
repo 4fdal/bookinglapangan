@@ -7,7 +7,7 @@ export default function Create({ auth, message }) {
 
     const handleSubmit = (e, data) => {
         e.preventDefault();
-        router.post(route('lapangan.store'), data)
+        router.post(route('admin.lapangan.store'), data)
     };
 
     return (
