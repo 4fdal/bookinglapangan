@@ -15,7 +15,7 @@ export default function CardLapangan({
     const [openModalDelete, setOpenModalDelete] = React.useState(false);
 
     const handleDelete = () => {
-        router.delete(route("lapangan.destroy", { id }));
+        router.delete(route("admin.lapangan.destroy", { id }));
         setOpenModalDelete(false);
     };
 
@@ -53,15 +53,15 @@ export default function CardLapangan({
                                 aria-haspopup="true"
                                 aria-expanded="false"
                             >
-                                <i className="bi bi-gear"></i>
+                                <i className="bi bi-three-dots-vertical"></i>
                             </button>
                             <div
                                 className="dropdown-menu"
                                 aria-labelledby="dropdownMenuButton"
                             >
-                                <a className="dropdown-item" href="#">
+                                {/* <a className="dropdown-item" href="#">
                                     Tampilkan
-                                </a>
+                                </a> */}
                                 <Link
                                     className="dropdown-item"
                                     href={route("admin.lapangan.edit", { id })}

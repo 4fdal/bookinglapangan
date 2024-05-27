@@ -36,11 +36,13 @@ class HandleInertiaRequests extends Middleware
 
         if (isset($user)) {
             if (isset($user->pelanggan)) $user->pelanggan =  $user->pelanggan ?? null;
+            if (isset($user->roles)) $user->roles =  $user->roles ?? null;
 
             if ($user->hasRole(User::ROLE_CUSTOMER)) {
                 $user->cart = Pemesanan::where('status', Pemesanan::STATUS_PENDING)->count();
             }
         }
+
 
         return [
             ...parent::share($request),
