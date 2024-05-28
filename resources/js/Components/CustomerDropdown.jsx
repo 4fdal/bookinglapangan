@@ -1,13 +1,15 @@
 import { Link } from "@inertiajs/react";
 
 export default function CustomerDropdown({ user, onLogout }) {
-    const isAdmin = user.roles?.find((role) => role.name == "admin");
+    const isAdmin = user
+        ? user.roles?.find((role) => role.name == "admin")
+        : false;
 
     return (
         <div className="header-top-right">
-            {isAdmin && (
+            {user && isAdmin && (
                 <div className="dropdown">
-                    <a
+                    <Link
                         href="#"
                         id="topbarUserDropdown"
                         className="user-dropdown d-flex align-items-center dropend dropdown-toggle "
@@ -26,7 +28,7 @@ export default function CustomerDropdown({ user, onLogout }) {
                                 {user.email}
                             </p>
                         </div>
-                    </a>
+                    </Link>
                     <ul
                         className="dropdown-menu dropdown-menu-end shadow-lg"
                         aria-labelledby="topbarUserDropdown"
@@ -66,9 +68,9 @@ export default function CustomerDropdown({ user, onLogout }) {
                     </ul>
                 </div>
             )}
-            {!isAdmin && (
+            {user && !isAdmin && (
                 <div className="dropdown">
-                    <a
+                    <Link
                         href="#"
                         id="topbarUserDropdown"
                         className="user-dropdown d-flex align-items-center dropend dropdown-toggle "
@@ -87,7 +89,7 @@ export default function CustomerDropdown({ user, onLogout }) {
                                 {user.email}
                             </p>
                         </div>
-                    </a>
+                    </Link>
                     <ul
                         className="dropdown-menu dropdown-menu-end shadow-lg"
                         aria-labelledby="topbarUserDropdown"

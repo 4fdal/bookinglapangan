@@ -8,11 +8,12 @@ export default function Welcome({
     message,
     lapangan_paginate,
 }) {
+    const query = new URLSearchParams(window.location.search);
     const [search, setSearch] = React.useState(null);
 
     const handleSearch = (e) => {
         e.preventDefault();
-        router.visit(route("welcome", { s: search }));
+        router.visit(route("welcome", { s: search ?? "" }));
     };
 
     return (
@@ -35,9 +36,7 @@ export default function Welcome({
                         <form method="get" onSubmit={handleSearch}>
                             <div className="d-flex flex-row items-align-center">
                                 <input
-                                    defaultValue={new URLSearchParams(
-                                        window.location.search
-                                    ).get("s")}
+                                    defaultValue={query.get("s") ?? null}
                                     onChange={(e) => setSearch(e.target.value)}
                                     placeholder="Cari Lapangan . . ."
                                     className="form-control"
