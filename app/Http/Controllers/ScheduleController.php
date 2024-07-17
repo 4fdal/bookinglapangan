@@ -23,12 +23,12 @@ class ScheduleController extends Controller
                 $tanggal_booking = $pemesanan->tanggal_booking;
 
                 $id = $pemesanan->id;
-                $title = $pemesanan->lapangan->nama;
+                $title = $pemesanan->lapangan->nama ?? null;
                 $start = "{$tanggal_booking} {$pemesanan->waktu_mulai}";
                 $end = "{$tanggal_booking} {$pemesanan->waktu_selesai}";
 
                 return compact('id', 'title', 'start', 'end');
-            });
+            })->whereNotNull('title');
 
         $lapangan = Lapangan::get();
 

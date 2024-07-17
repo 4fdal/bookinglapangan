@@ -22,7 +22,6 @@ class PelangganController extends Controller
         }
         $user = $user->paginate($per_page)->toArray();
 
-
         return Inertia::render('Pelanggan/Index', [
             'data' => $user
         ]);

@@ -32,7 +32,7 @@ export default function UserItem({ user }) {
                     </div>
                     <div className="d-flex flex-column">
                         <strong>Alamat </strong>
-                        <p className="mb-0">{user.pelanggan.alamat}</p>
+                        <p className="mb-0">{user.pelanggan?.alamat ?? null}</p>
                     </div>
                 </div>
             </div>
